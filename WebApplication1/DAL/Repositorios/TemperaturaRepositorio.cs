@@ -1,4 +1,5 @@
-﻿using System.Net.Http;
+﻿using Microsoft.AspNetCore.Mvc;
+using System.Net.Http;
 using System.Threading.Tasks;
 using WebApplication1.DAL.Interfaces;
 
@@ -8,7 +9,7 @@ namespace WebApplication1.DAL.Repositorios
     {
         HttpClient client = new HttpClient();
 
-        public async Task<dynamic> PegarTemperatura(string url)
+        public async Task<string> PegarTemperatura(string url)
         {
             var response = await client.GetStringAsync(url);
 

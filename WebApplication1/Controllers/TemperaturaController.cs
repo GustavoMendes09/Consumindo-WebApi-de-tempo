@@ -3,6 +3,7 @@ using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
 using WebApplication1.BLL.Models;
 using WebApplication1.DAL.Interfaces;
+using Newtonsoft.Json;
 
 
 namespace WebApplication1.Controllers
@@ -26,6 +27,8 @@ namespace WebApplication1.Controllers
                 string url = "https://api.openweathermap.org/data/2.5/weather?q=SAO%20PAULO&appid=c02891c1ba6b87156a106730fb724b77";
                 var novaTemp = await _temperatura.PegarTemperatura(url);
 
+                //Convertendo json anonimo
+                #region
                 var anonymousType = new
                     {
                     main = new
@@ -36,10 +39,19 @@ namespace WebApplication1.Controllers
                     }
                 };
 
-                var tempo = Newtonsoft.Json.JsonConvert.DeserializeAnonymousType(novaTemp, anonymousType)?.main;
-                Tempo tempoSP = new Tempo(tempo.temp, tempo.temp_min, tempo.temp_max);
-                return tempoSP;
+                var tempo = JsonConvert.DeserializeAnonymousType(novaTemp, anonymousType)?.main;
+                Tempo tempoSPAnonimo = new Tempo(tempo.temp, tempo.temp_min ,tempo.temp_max);
+                #endregion
+
+
+                //Convertendo json model
+                #region
+                var tempoSP = JsonConvert.DeserializeObject<main>(novaTemp);
+                #endregion
+
+                return tempoSP.tempo;
             }
+
             catch (Exception ex)
             {
                 throw ex;

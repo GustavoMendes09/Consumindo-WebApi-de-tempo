@@ -1,9 +1,10 @@
-﻿using System.Threading.Tasks;
+﻿using Microsoft.AspNetCore.Mvc;
+using System.Threading.Tasks;
 
 namespace WebApplication1.DAL.Interfaces
 {
     public interface ITemperaturaRepositorio
     {
-        Task<dynamic> PegarTemperatura(string url);
+        Task<string> PegarTemperatura(string url);
     }
 }
