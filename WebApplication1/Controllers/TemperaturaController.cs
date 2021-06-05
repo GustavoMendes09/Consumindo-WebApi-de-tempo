@@ -49,7 +49,20 @@ namespace WebApplication1.Controllers
                 var tempoSP = JsonConvert.DeserializeObject<main>(novaTemp);
                 #endregion
 
-                return tempoSP.tempo;
+
+                //Convertendo em tempo de execução
+                #region
+                dynamic dynamic = JsonConvert.DeserializeObject(novaTemp);
+
+                var tempoDynamic = new Tempo
+                {
+                    tempAtual = dynamic.main.temp,
+                    tempMin = dynamic.main.temp_min,
+                    tempMax = dynamic.main.temp_max
+                };
+                #endregion
+
+                return tempoDynamic;
             }
 
             catch (Exception ex)
